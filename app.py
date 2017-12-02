@@ -13,6 +13,14 @@ class ApplicationInterface(tk.Frame):
         self.background.pack(side="bottom", fill="both", expand="true")
         self.background.master.geometry("600x450")
 
+        self.drawInitialScreen()
+
+    # Draw application's initial screen
+    def drawInitialScreen(self):
+        # Cleaning background frame
+        for widget in self.background.winfo_children():
+            widget.destroy()
+
         self.drawLabel()
         self.drawImageExample()
         self.drawMenu()
@@ -49,7 +57,10 @@ class ApplicationInterface(tk.Frame):
             font="Helvetica 18 bold",
             highlightbackground='#525659',
             width=18,
-            height=5)
+            height=5,
+            cursor="hand2",
+            command=self.drawMethodScreen
+        )
         self.ff.pack(side="left", fill="both")
 
         self.fb = tk.Button(
@@ -59,8 +70,32 @@ class ApplicationInterface(tk.Frame):
             highlightbackground='#525659',
             width=18,
             height=5,
-            padx="15p",
-            pady="15p")
+            cursor="hand2",
+            command=self.drawMethodScreen)
         self.fb.pack(side="right", fill="both")
 
+    # Draw method's screen
+    def drawMethodScreen(self):
+        # Cleaning background frame
+        for widget in self.background.winfo_children():
+            widget.destroy()
+
+        self.drawGoBack()
     
+    # Drawing a button to go back to initial screen
+    def drawGoBack(self):
+        self.backBtnImg = tk.PhotoImage(file="reply.gif")
+
+        self.backBtnFrame = tk.Frame(
+            self.background, bg="#525659", width="600")
+        self.backBtnFrame.pack(side="top", fill="x")
+        # Creating the button itself
+        self.backBtn = tk.Label(
+            self.backBtnFrame,
+            bg='#525659',
+            width=32,
+            height=32,
+            image=self.backBtnImg,
+            cursor="hand2")
+        self.backBtn.pack(side="left", fill="none")
+        self.backBtn.bind("<Button-1>", lambda e: self.drawInitialScreen())
