@@ -191,63 +191,20 @@ class ApplicationInterface(tk.Frame):
         self.axes.cla()
         self.axes.set_axis_off()
 
-        graph = nx.DiGraph()
-        graph.add_nodes_from('ABCDEFGH')
-        graph.add_edges_from([
-            ('A', 'B', {
-                'capacity': 4,
-                'flow': 0
-            }),
-            ('A', 'C', {
-                'capacity': 5,
-                'flow': 0
-            }),
-            ('A', 'D', {
-                'capacity': 7,
-                'flow': 0
-            }),
-            ('B', 'E', {
-                'capacity': 7,
-                'flow': 0
-            }),
-            ('C', 'E', {
-                'capacity': 6,
-                'flow': 0
-            }),
-            ('C', 'F', {
-                'capacity': 4,
-                'flow': 0
-            }),
-            ('C', 'G', {
-                'capacity': 1,
-                'flow': 0
-            }),
-            ('D', 'F', {
-                'capacity': 8,
-                'flow': 0
-            }),
-            ('D', 'G', {
-                'capacity': 1,
-                'flow': 0
-            }),
-            ('E', 'H', {
-                'capacity': 7,
-                'flow': 0
-            }),
-            ('F', 'H', {
-                'capacity': 6,
-                'flow': 0
-            }),
-            ('G', 'H', {
-                'capacity': 4,
-                'flow': 0
-            }),
-        ])
-        maxflow.MaxFlow.ford_fulkerson(graph, 'A', 'H', None)
-
-        pos = nx.spring_layout(graph)
-        weight_labels = nx.get_edge_attributes(graph, 'weight')
-        nx.draw_networkx(graph, pos, ax=self.axes, with_labels=True)
+        G = nx.DiGraph()
+        G.add_weighted_edges_from(
+            [['a', 'b', 3.0],
+            ['b', 'c', 5.0],
+            ['c', 'd', 1.0],
+            ['d', 'e', 2.0],
+            ['a', 'd', 1.5],
+            ['e', 'f', 3.0],
+            ['e', 'c', 2.0]]
+        )
+    
+        pos = nx.spring_layout(G)
+        weight_labels = nx.get_edge_attributes(G, 'weight')
+        nx.draw_networkx(G, pos, ax=self.axes, with_labels=True)
         nx.draw_networkx_edge_labels(
-            graph, pos, ax=self.axes, edge_labels=weight_labels)
+            G, pos, ax=self.axes, edge_labels=weight_labels)
         self.plt_canvas.show()
