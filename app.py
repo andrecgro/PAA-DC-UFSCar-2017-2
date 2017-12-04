@@ -201,7 +201,7 @@ class ApplicationInterface(tk.Frame):
             ['e', 'f', 3.0],
             ['e', 'c', 2.0]]
         )
-    
+
         pos = nx.spring_layout(G)
         weight_labels = nx.get_edge_attributes(G, 'weight')
         nx.draw_networkx(G, pos, ax=self.axes, with_labels=True)
